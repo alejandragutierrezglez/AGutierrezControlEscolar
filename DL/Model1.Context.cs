@@ -29,6 +29,7 @@ namespace DL
     
         public virtual DbSet<Alumno> Alumnos { get; set; }
         public virtual DbSet<Materia> Materias { get; set; }
+        public virtual DbSet<AlumnoMateria> AlumnoMaterias { get; set; }
     
         public virtual int AlumnoAdd(string nombre, string apellidoPaterno, string apellidoMaterno)
         {
@@ -142,6 +143,15 @@ namespace DL
                 new ObjectParameter("Costo", typeof(decimal));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MateriaUpdate", idMateriaParameter, nombreParameter, costoParameter);
+        }
+    
+        public virtual ObjectResult<MateriasGetByAlumno_Result> MateriasGetByAlumno(Nullable<int> idAlumno)
+        {
+            var idAlumnoParameter = idAlumno.HasValue ?
+                new ObjectParameter("IdAlumno", idAlumno) :
+                new ObjectParameter("IdAlumno", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MateriasGetByAlumno_Result>("MateriasGetByAlumno", idAlumnoParameter);
         }
     }
 }

@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="AGutierrezControlEscolarModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AlumnoMateria">
+          <Key>
+            <PropertyRef Name="IdAlumnoMateria" />
+          </Key>
+          <Property Name="IdAlumnoMateria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdAlumno" Type="int" />
+          <Property Name="IdMateria" Type="int" />
+        </EntityType>
         <EntityType Name="Alumnos">
           <Key>
             <PropertyRef Name="IdAlumno" />
@@ -22,6 +30,30 @@
           <Property Name="Nombre" Type="varchar" MaxLength="50" />
           <Property Name="Costo" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
+        <Association Name="FK__AlumnoMat__IdAlu__1DE57479">
+          <End Role="Alumnos" Type="Self.Alumnos" Multiplicity="0..1" />
+          <End Role="AlumnoMateria" Type="Self.AlumnoMateria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumnos">
+              <PropertyRef Name="IdAlumno" />
+            </Principal>
+            <Dependent Role="AlumnoMateria">
+              <PropertyRef Name="IdAlumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AlumnoMat__IdMat__1ED998B2">
+          <End Role="Materias" Type="Self.Materias" Multiplicity="0..1" />
+          <End Role="AlumnoMateria" Type="Self.AlumnoMateria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materias">
+              <PropertyRef Name="IdMateria" />
+            </Principal>
+            <Dependent Role="AlumnoMateria">
+              <PropertyRef Name="IdMateria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="AlumnoAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Nombre" Type="varchar" Mode="In" />
           <Parameter Name="ApellidoPaterno" Type="varchar" Mode="In" />
@@ -51,14 +83,26 @@
         <Function Name="MateriaGetById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdMateria" Type="int" Mode="In" />
         </Function>
+        <Function Name="MateriasGetByAlumno" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdAlumno" Type="int" Mode="In" />
+        </Function>
         <Function Name="MateriaUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdMateria" Type="int" Mode="In" />
           <Parameter Name="Nombre" Type="varchar" Mode="In" />
           <Parameter Name="Costo" Type="decimal" Mode="In" />
         </Function>
         <EntityContainer Name="AGutierrezControlEscolarModelStoreContainer">
+          <EntitySet Name="AlumnoMateria" EntityType="Self.AlumnoMateria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Alumnos" EntityType="Self.Alumnos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Materias" EntityType="Self.Materias" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__AlumnoMat__IdAlu__1DE57479" Association="Self.FK__AlumnoMat__IdAlu__1DE57479">
+            <End Role="Alumnos" EntitySet="Alumnos" />
+            <End Role="AlumnoMateria" EntitySet="AlumnoMateria" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AlumnoMat__IdMat__1ED998B2" Association="Self.FK__AlumnoMat__IdMat__1ED998B2">
+            <End Role="Materias" EntitySet="Materias" />
+            <End Role="AlumnoMateria" EntitySet="AlumnoMateria" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -72,6 +116,7 @@
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ApellidoPaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ApellidoMaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AlumnoMaterias" Relationship="AGutierrezControlEscolarModel.FK__AlumnoMat__IdAlu__1DE57479" FromRole="Alumno" ToRole="AlumnoMateria" />
         </EntityType>
         <EntityType Name="Materia">
           <Key>
@@ -80,6 +125,7 @@
           <Property Name="IdMateria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Costo" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="AlumnoMaterias" Relationship="AGutierrezControlEscolarModel.FK__AlumnoMat__IdMat__1ED998B2" FromRole="Materia" ToRole="AlumnoMateria" />
         </EntityType>
         <EntityContainer Name="AGutierrezControlEscolarEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Alumnos" EntityType="Self.Alumno" />
@@ -107,16 +153,28 @@
             <Parameter Name="Costo" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="MateriaDelete">
-            <Parameter Name="IdMateria" Mode="In" Type="Int32" />
+          <Parameter Name="IdMateria" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="MateriaGetAll" ReturnType="Collection(AGutierrezControlEscolarModel.MateriaGetAll_Result)" />
           <FunctionImport Name="MateriaGetById" ReturnType="Collection(AGutierrezControlEscolarModel.MateriaGetById_Result)">
-            <Parameter Name="IdMateria" Mode="In" Type="Int32" />
+          <Parameter Name="IdMateria" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="MateriaUpdate">
             <Parameter Name="IdMateria" Mode="In" Type="Int32" />
             <Parameter Name="Nombre" Mode="In" Type="String" />
             <Parameter Name="Costo" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <EntitySet Name="AlumnoMaterias" EntityType="AGutierrezControlEscolarModel.AlumnoMateria" />
+          <AssociationSet Name="FK__AlumnoMat__IdAlu__1DE57479" Association="AGutierrezControlEscolarModel.FK__AlumnoMat__IdAlu__1DE57479">
+            <End Role="Alumno" EntitySet="Alumnos" />
+            <End Role="AlumnoMateria" EntitySet="AlumnoMaterias" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AlumnoMat__IdMat__1ED998B2" Association="AGutierrezControlEscolarModel.FK__AlumnoMat__IdMat__1ED998B2">
+            <End Role="Materia" EntitySet="Materias" />
+            <End Role="AlumnoMateria" EntitySet="AlumnoMaterias" />
+          </AssociationSet>
+          <FunctionImport Name="MateriasGetByAlumno" ReturnType="Collection(AGutierrezControlEscolarModel.MateriasGetByAlumno_Result)">
+            <Parameter Name="IdAlumno" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="AlumnoGetAll_Result">
@@ -140,6 +198,46 @@
           <Property Type="Int32" Name="IdMateria" Nullable="false" />
           <Property Type="String" Name="Nombre" Nullable="true" MaxLength="50" />
           <Property Type="Decimal" Name="Costo" Nullable="true" Precision="18" Scale="0" />
+        </ComplexType>
+        <EntityType Name="AlumnoMateria">
+          <Key>
+            <PropertyRef Name="IdAlumnoMateria" />
+          </Key>
+          <Property Name="IdAlumnoMateria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdAlumno" Type="Int32" />
+          <Property Name="IdMateria" Type="Int32" />
+          <NavigationProperty Name="Alumno" Relationship="AGutierrezControlEscolarModel.FK__AlumnoMat__IdAlu__1DE57479" FromRole="AlumnoMateria" ToRole="Alumno" />
+          <NavigationProperty Name="Materia" Relationship="AGutierrezControlEscolarModel.FK__AlumnoMat__IdMat__1ED998B2" FromRole="AlumnoMateria" ToRole="Materia" />
+        </EntityType>
+        <Association Name="FK__AlumnoMat__IdAlu__1DE57479">
+          <End Type="AGutierrezControlEscolarModel.Alumno" Role="Alumno" Multiplicity="0..1" />
+          <End Type="AGutierrezControlEscolarModel.AlumnoMateria" Role="AlumnoMateria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alumno">
+              <PropertyRef Name="IdAlumno" />
+            </Principal>
+            <Dependent Role="AlumnoMateria">
+              <PropertyRef Name="IdAlumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AlumnoMat__IdMat__1ED998B2">
+          <End Type="AGutierrezControlEscolarModel.Materia" Role="Materia" Multiplicity="0..1" />
+          <End Type="AGutierrezControlEscolarModel.AlumnoMateria" Role="AlumnoMateria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materia">
+              <PropertyRef Name="IdMateria" />
+            </Principal>
+            <Dependent Role="AlumnoMateria">
+              <PropertyRef Name="IdMateria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="MateriasGetByAlumno_Result">
+          <Property Type="Int32" Name="IdAlumnoMateria" Nullable="false" />
+          <Property Type="Int32" Name="IdAlumno" Nullable="true" />
+          <Property Type="Int32" Name="IdMateria" Nullable="true" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="50" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -210,6 +308,25 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="MateriaUpdate" FunctionName="AGutierrezControlEscolarModel.Store.MateriaUpdate" />
+          <EntitySetMapping Name="AlumnoMaterias">
+            <EntityTypeMapping TypeName="AGutierrezControlEscolarModel.AlumnoMateria">
+              <MappingFragment StoreEntitySet="AlumnoMateria">
+                <ScalarProperty Name="IdMateria" ColumnName="IdMateria" />
+                <ScalarProperty Name="IdAlumno" ColumnName="IdAlumno" />
+                <ScalarProperty Name="IdAlumnoMateria" ColumnName="IdAlumnoMateria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="MateriasGetByAlumno" FunctionName="AGutierrezControlEscolarModel.Store.MateriasGetByAlumno">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AGutierrezControlEscolarModel.MateriasGetByAlumno_Result">
+                <ScalarProperty Name="IdAlumnoMateria" ColumnName="IdAlumnoMateria" />
+                <ScalarProperty Name="IdAlumno" ColumnName="IdAlumno" />
+                <ScalarProperty Name="IdMateria" ColumnName="IdMateria" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

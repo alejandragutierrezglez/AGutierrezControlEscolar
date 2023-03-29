@@ -7,6 +7,9 @@
       <Diagram DiagramId="d04eea2e5dc2418699ab5667830922e4" Name="Diagram1">
         <EntityTypeShape EntityType="AGutierrezControlEscolarModel.Alumno" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AGutierrezControlEscolarModel.Materia" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AGutierrezControlEscolarModel.AlumnoMateria" Width="1.5" PointX="5" PointY="0.75" />
+        <AssociationConnector Association="AGutierrezControlEscolarModel.FK__AlumnoMat__IdAlu__1DE57479" />
+        <AssociationConnector Association="AGutierrezControlEscolarModel.FK__AlumnoMat__IdMat__1ED998B2" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

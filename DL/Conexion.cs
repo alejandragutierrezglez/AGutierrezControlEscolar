@@ -11,8 +11,9 @@ namespace DL
     {
         public static string GetConnectionString()
         {
-            //return System.Configuration.ConfigurationManager.ConnectionStrings["AGutierrezControlEscolar"].ConnectionString.ToString();
-            return System.Configuration.ConfigurationManager.AppSettings["WebApi"];
+            return System.Configuration.ConfigurationManager.ConnectionStrings["AGutierrezControlEscolar"].ConnectionString.ToString();
+            //string str= System.Configuration.ConfigurationManager.AppSettings["WebApi"];
+            //return str;
 
         }
     }

@@ -150,23 +150,41 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Connected Services\ServiceReferenceAlumno\Reference.cs">
+    <Compile Include="Connected Services\ServiceReferenceAlumnoo\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AlumnoController.cs" />
+    <Compile Include="Controllers\AlumnoMateriaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MateriaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\ServiceReferenceAlumno\ServiceAlumno.disco" />
-    <None Include="Connected Services\ServiceReferenceAlumno\configuration91.svcinfo" />
-    <None Include="Connected Services\ServiceReferenceAlumno\configuration.svcinfo" />
-    <None Include="Connected Services\ServiceReferenceAlumno\Reference.svcmap">
+    <None Include="Connected Services\ServiceReferenceAlumnoo\ServiceAlumno.wsdl" />
+    <None Include="Connected Services\ServiceReferenceAlumnoo\ServiceAlumno.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReferenceAlumnoo\ServiceAlumno1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReferenceAlumnoo\ServiceAlumno2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReferenceAlumnoo\ServiceAlumno3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReferenceAlumnoo\ServiceAlumno4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServiceReferenceAlumnoo\ServiceAlumno.disco" />
+    <None Include="Connected Services\ServiceReferenceAlumnoo\configuration91.svcinfo" />
+    <None Include="Connected Services\ServiceReferenceAlumnoo\configuration.svcinfo" />
+    <None Include="Connected Services\ServiceReferenceAlumnoo\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -180,10 +198,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <None Include="Connected Services\ServiceReferenceAlumno\ServiceAlumno.wsdl" />
-    <None Include="Connected Services\ServiceReferenceAlumno\ServiceAlumno.xsd">
-      <SubType>Designer</SubType>
-    </None>
+    <Content Include="Properties\DataSources\ML.Result.datasource" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -209,11 +224,17 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Alumno\GetAll.cshtml" />
+    <Content Include="Views\Alumno\Modal.cshtml" />
+    <Content Include="Views\Alumno\Form.cshtml" />
+    <Content Include="Views\Materia\GetAll.cshtml" />
+    <Content Include="Views\Materia\Form.cshtml" />
+    <Content Include="Views\Materia\Modal.cshtml" />
+    <Content Include="Views\AlumnoMateria\GetAll.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Alumno\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -242,7 +263,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\ServiceReferenceAlumno\" />
+    <WCFMetadataStorage Include="Connected Services\ServiceReferenceAlumnoo\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
