@@ -1,0 +1,85 @@
+﻿@model ML.AlumnoMateria
+@{
+    ViewBag.Title = "MateriasSinAsignarGetByAlumno";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h5>Seleccione Agregar para agregar una materia</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("MateriasAdd", "AlumnoMateria", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form-group">
+                    <div>
+                        @Html.LabelFor(model => model.Alumno.IdAlumno, new { @class = "hidden" })
+                        @Html.TextBoxFor(model => model.Alumno.IdAlumno, new { @class = "hidden form-control" })
+                        @Html.ValidationMessageFor(model => model.Alumno.IdAlumno)
+                        @*hidden*@
+                    </div>
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.Alumno.Nombre)
+                        @Html.TextBoxFor(model => model.Alumno.Nombre, new { @class = "form-control", @id = "txtNombre", disabled = "true" })
+                        @Html.ValidationMessageFor(model => model.Alumno.Nombre, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.Alumno.ApellidoPaterno)
+                        @Html.TextBoxFor(model => model.Alumno.ApellidoPaterno, new { @class = "form-control", @id = "txtApellidoPaterno", disabled = "true" })
+                        @Html.ValidationMessageFor(model => model.Alumno.ApellidoPaterno, null, new { @class = "text-danger", })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.Alumno.ApellidoMaterno)
+                        @Html.TextBoxFor(model => model.Alumno.ApellidoMaterno, new { @class = "form-control", @id = "txtApellidoMaterno", disabled = "true" })
+                        @Html.ValidationMessageFor(model => model.Alumno.ApellidoMaterno, null, new { @class = "text-danger" })
+                    </div>
+
+                </div>
+                <br /><br /> <br /><br />
+                <div class="row">
+                    <div class="col-lg-12">
+                        <table class="table table-bordered table-responsive">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <td>Seleccionar</td>
+                                    <td class="hidden">IdMateria</td>
+                                    <td class="hidden">IdAlumno</td>
+                                    <td>Materia</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (ML.AlumnoMateria alumnoMateria in Model.AlumnosMaterias)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="AlumnosMaterias" value="@alumnoMateria.Materia.IdMateria" id="flexCheckDefault">
+                                                <label class="form-check-label" for="flexCheckDefault"></label>
+                                            </div>
+                                        </td>
+                                        <td class="hidden">@alumnoMateria.Materia.IdMateria</td>
+                                        <td class="hidden">@alumnoMateria.Alumno.IdAlumno</td>
+                                        <td>@alumnoMateria.Materia.Nombre</td>
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+                        @*@Html.ActionLink("Actualizar", "MateriasAdd", "AlumnoMateria", htmlAttributes: new { @class = "btn btn-success" })*@
+                        <input type="submit" value="Guardar" class="btn btn-success" />
+                        @Html.ActionLink("Regresar", "GetAll", "AlumnoMateria", htmlAttributes: new { @class = "btn btn-danger" })
+
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
+
+
+

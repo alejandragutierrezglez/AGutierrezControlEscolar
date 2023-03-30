@@ -11,14 +11,10 @@ namespace DL
 {
     using System;
     
-    public partial class MateriasGetByAlumno_Result
+    public partial class MateriasSinAsignarByIdAlumno_Result
     {
-        public int IdAlumnoMateria { get; set; }
-        public Nullable<int> IdAlumno { get; set; }
-        public string NombreAlumno { get; set; }
-        public string ApellidoPaterno { get; set; }
-        public string ApellidoMaterno { get; set; }
-        public Nullable<int> IdMateria { get; set; }
+        public int IdMateria { get; set; }
         public string Nombre { get; set; }
+        public Nullable<decimal> Costo { get; set; }
     }
 }

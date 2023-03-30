@@ -153,5 +153,40 @@ namespace DL
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MateriasGetByAlumno_Result>("MateriasGetByAlumno", idAlumnoParameter);
         }
+    
+        public virtual ObjectResult<MateriasSinAsignarByIdAlumno_Result> MateriasSinAsignarByIdAlumno(Nullable<int> idAlumno)
+        {
+            var idAlumnoParameter = idAlumno.HasValue ?
+                new ObjectParameter("IdAlumno", idAlumno) :
+                new ObjectParameter("IdAlumno", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MateriasSinAsignarByIdAlumno_Result>("MateriasSinAsignarByIdAlumno", idAlumnoParameter);
+        }
+    
+        public virtual int AlumnoMateriaAdd(Nullable<int> idAlumno, Nullable<int> idMateria)
+        {
+            var idAlumnoParameter = idAlumno.HasValue ?
+                new ObjectParameter("IdAlumno", idAlumno) :
+                new ObjectParameter("IdAlumno", typeof(int));
+    
+            var idMateriaParameter = idMateria.HasValue ?
+                new ObjectParameter("IdMateria", idMateria) :
+                new ObjectParameter("IdMateria", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AlumnoMateriaAdd", idAlumnoParameter, idMateriaParameter);
+        }
+    
+        public virtual int AlumnoMateriaDelete(Nullable<int> idAlumno, Nullable<int> idMateria)
+        {
+            var idAlumnoParameter = idAlumno.HasValue ?
+                new ObjectParameter("IdAlumno", idAlumno) :
+                new ObjectParameter("IdAlumno", typeof(int));
+    
+            var idMateriaParameter = idMateria.HasValue ?
+                new ObjectParameter("IdMateria", idMateria) :
+                new ObjectParameter("IdMateria", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AlumnoMateriaDelete", idAlumnoParameter, idMateriaParameter);
+        }
     }
 }
